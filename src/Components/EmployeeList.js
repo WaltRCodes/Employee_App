@@ -14,13 +14,16 @@ class EmployeeList extends Component {
   componentDidMount() {
     this.setState({isLoading: true});
 
-    fetch('api/nycgeek/employees')
+    fetch('walter_api/v1/employees')
       .then(response => response.json())
       .then(data => this.setState({employees: data, isLoading: false}));
+      console.log(this.state.employees);
+ 
   }
+  
 
   async remove(id) {
-    await fetch(`/api/nycgeek/employee/${id}`, {
+    await fetch(`walter_api/v1/employees/${id}`, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',

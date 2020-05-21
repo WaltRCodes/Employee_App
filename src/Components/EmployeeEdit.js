@@ -22,10 +22,16 @@ class EmployeeEdit extends Component {
 
   async componentDidMount() {
     if (this.props.match.params.id !== 'new') {
-      const group = await (await fetch(`/api/nycgeek/employee/${this.props.match.params.id}`)).json();
+      const group = await (await fetch(`/walter_api/v1/employees/${this.props.match.params.id}`)).json();
+      fetch(`/walter_api/v1/employees/${this.props.match.params.id}`)
+      .then(response => response.json())
+      .then(data => console.log(data));
+      //console.log(this.props.match.params.id);
       this.setState({item: group});
     }
   }
+
+  
 
   handleChange(event) {
     const target = event.target;
@@ -39,8 +45,8 @@ class EmployeeEdit extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const {item} = this.state;
-
-    await fetch('/api/nycgeek/employee', {
+    let idString = (item.id) ? '/'+item.id : ''
+    await fetch('/walter_api/v1/employees'+idString, {
       method: (item.id) ? 'PUT' : 'POST',
       headers: {
         'Accept': 'application/json',
